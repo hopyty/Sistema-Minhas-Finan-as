@@ -1,0 +1,16 @@
+            using (var conn = new NpgsqlConnection(connString))
+            {
+                conn.Open();
+                string selectSql = "SELECT id_usuario, nome FROM Usuario WHERE id = @id";
+
+                using (var cmd = new NpgsqlCommand(selectSql, conn))
+                {
+                    cmd.Parameters.AddWithValue("email", email);
+                    cmd.Parameters.AddWithValue("senha", senha);
+
+                    using (var reader = cmd.ExecuteReader())
+            
+                    Sessao.IdUsuarioLogado = reader.GetInt32(0);
+                    Sessao.NomeUsuarioLogado = reader.GetString(1);                    
+                }
+            }
